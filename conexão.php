@@ -1,15 +1,18 @@
+
 <?php
 $host = "localhost";
+$db = "sistema_bolos";
 $user = "root";
 $pass = "";
-$db = "sistema_bolos";
 
-$conn = new mysqli($host, $user, $pass, $db);
+$dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
 
-// testar conexão
-if ($conn->connect_error) {
-    die("Erro na conexão: " . $conn->connect_error);
+try {
+    $pdo = new PDO($dsn, $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+} catch (PDOException $e) {
+    die("Erro de conexão: " . $e->getMessage());
 }
-
-echo "Conectado com sucesso!";
 ?>
